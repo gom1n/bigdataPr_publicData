@@ -59,3 +59,34 @@ station_df = pd.DataFrame(row_list, columns=name_list)
 loc_df = station_df.groupby('zcode')
 only_zcode = loc_df.size()
 print(only_zcode)
+
+import matplotlib.pyplot as plt
+import platform
+
+# Window
+if platform.system() == 'Windows':
+    plt.rc('font', family='Malgun Gothic')
+elif platform.system() == 'Darwin': # Mac
+    plt.rc('font', family='AppleGothic')
+else: #linux
+    plt.rc('font', family='NanumGothic')
+
+zcode_arr = ['11', '26', '27', '28', '29', '30', '31', '36', '41', '42', '43', '44', '45', '46', '47', '48', '50']
+df_count = only_zcode.to_numpy()
+
+# 숫자 labe 추가
+def add_value_label(x_list,y_list):
+    for i in range(1, len(x_list)+1):
+        plt.text(i,y_list[i-1],y_list[i-1], fontsize=5, color='blue', horizontalalignment='left', verticalalignment='bottom')
+
+
+plt.title('지역별 전기자동차 충전소 현황')
+# x축 라벨 설정
+plt.xlabel('지역')
+# x축 라벨 설정
+plt.ylabel('충전소 개수')
+# 막대 그래프(x, y)
+plt.bar(zcode_arr, df_count)
+add_value_label(zcode_arr,df_count)
+# 그래프 출력
+plt.show()
