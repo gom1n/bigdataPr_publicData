@@ -1,16 +1,18 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+import requests
+import pprint
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+#인증키 입력
+encoding = 'wEOWhOEV95XFLOJ4fqYdWXwJMODD6Ze7R8%2FQDUZdmBrHnlVU8ER0P2YenWEkb4imfh7IvqniyzIfj%2BEZp%2BnG%2Fw%3D%3D'
+decoding = 'wEOWhOEV95XFLOJ4fqYdWXwJMODD6Ze7R8/QDUZdmBrHnlVU8ER0P2YenWEkb4imfh7IvqniyzIfj+EZp+nG/w=='
 
+#url 입력
+url = 'http://apis.data.go.kr/B552584/EvCharger/getChargerInfo'
+params ={'serviceKey' : decoding, 'pageNo' : '1', 'numOfRows' : '10', 'zcode' : '11' }
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+response = requests.get(url, params=params)
+# xml 내용
+content = response.text
+# 깔끔한 출력 위한 코드
+pp = pprint.PrettyPrinter(indent=4)
+print(pp.pprint(content))
