@@ -129,3 +129,22 @@ for i in range(len(x)):
     ).add_to(m)
 
 m.save('station.html')
+
+def state_color(state_list):
+    if state_list == '2':
+        return 'blue'
+    if state_list == '3':
+        return 'yellow'
+    else:
+        return 'red'
+
+m = folium.Map(location=[36.0,126.986],zoom_start=7)
+for i in range(len(x)):
+    folium.Circle(
+        location = [x[i], y[i]],
+        tooltip = name[i],
+        radius = 200,
+        color=state_color(state[i])
+    ).add_to(m)
+
+m.save('station_state.html')
