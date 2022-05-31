@@ -107,18 +107,19 @@ y = []
 name = []
 state = []
 for i in range(len(station_df['lat'])):
-    if station_df['lat'][i] == 0.0 or station_df['lat'][i] == 0.0:
-        pass
-    else:
-        name.append(station_df['statNm'][i])
-        x.append(station_df['lat'][i])
-        y.append(station_df['lng'][i])
-        state.append(station_df['stat'][i])
+    if station_df['zcode'][i] == '11':
+        if station_df['lat'][i] == 0.0 or station_df['lat'][i] == 0.0:
+            pass
+        else:
+            name.append(station_df['statNm'][i])
+            x.append(station_df['lat'][i])
+            y.append(station_df['lng'][i])
+            state.append(station_df['stat'][i])
 
-#지도 생성
+## 지도 생성 후 충전소 위치 출력
 import folium
 
-m = folium.Map(location=[36.0,126.986],zoom_start=7)
+m = folium.Map(location=[37.5502, 126.982],zoom_start=11)
 
 for i in range(len(x)):
     folium.Circle(
@@ -130,6 +131,7 @@ for i in range(len(x)):
 
 m.save('station.html')
 
+## 상태 별 충전소 출력 (색깔 다르게)
 def state_color(state_list):
     if state_list == '2':
         return 'blue'
@@ -138,7 +140,7 @@ def state_color(state_list):
     else:
         return 'red'
 
-m = folium.Map(location=[36.0,126.986],zoom_start=7)
+m = folium.Map(ocation=[37.5502, 126.982],zoom_start=11)
 for i in range(len(x)):
     folium.Circle(
         location = [x[i], y[i]],
