@@ -78,3 +78,26 @@ plt.barh(location, elec_count, color='purple', alpha=0.3)
 add_value_label(location, elec_count)
 # 그래프 출력
 plt.show()
+
+
+## 지도 생성
+import folium
+
+loc_df = pd.DataFrame({ 'LOCATION':location, 'COUNT':elec_count })
+print(loc_df)
+
+m = folium.Map(location=[37.562225, 126.978555], tiles="OpenStreetMap", zoom_start=11)
+state_geo = 'https://raw.githubusercontent.com/southkorea/seoul-maps/master/kostat/2013/json/seoul_municipalities_geo_simple.json'
+m.choropleth(
+    geo_data=state_geo,
+    name='인당소득',
+    data=loc_df,
+    columns=['LOCATION', 'COUNT'],
+    key_on='feature.properties.name',
+    fill_color='Blues',
+    fill_opacity=0.7,
+    line_opacity=0.3,
+    color = 'gray',
+    legend_name = 'income'
+)
+m.save('car.html')
