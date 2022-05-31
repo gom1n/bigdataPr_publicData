@@ -44,3 +44,37 @@ for i in range(len(data)):
 
 print(elec_count)
 
+## 막대 그래프
+import matplotlib.pyplot as plt
+import platform
+# Window
+if platform.system() == 'Windows':
+    plt.rc('font', family='Malgun Gothic')
+elif platform.system() == 'Darwin':  # Mac
+    plt.rc('font', family='AppleGothic')
+else:  # linux
+    plt.rc('font', family='NanumGothic')
+
+plt.rc('font', size=20)        # 기본 폰트 크기
+plt.rc('axes', labelsize=10)   # x,y축 label 폰트 크기
+plt.rc('xtick', labelsize=6)  # x축 눈금 폰트 크기
+plt.rc('ytick', labelsize=7)  # y축 눈금 폰트 크기
+plt.rc('legend', fontsize=20)  # 범례 폰트 크기
+plt.rc('figure', titlesize=50) # figure title 폰트 크기
+
+# 숫자 label 추가
+def add_value_label(x_list, y_list):
+    for i in range(1, len(x_list) + 1):
+        plt.text(i, y_list[i-1], y_list[i-1], fontsize=15, color='purple', horizontalalignment='center',
+                 verticalalignment='bottom')
+
+plt.title('자치구별 전기자동차 등록 현황')
+# x축 라벨 설정
+plt.xlabel('개수')
+# x축 라벨 설정
+plt.ylabel('자치구')
+# 막대 그래프(x, y)
+plt.barh(location, elec_count, color='purple', alpha=0.3)
+add_value_label(location, elec_count)
+# 그래프 출력
+plt.show()
