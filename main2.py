@@ -6,8 +6,9 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 data = pd.read_csv('22.2월 자치구별연료별차종별용도별.csv')
 
-data = data.drop([0, 1, 2, 3, 4, 5, 6, 7])
-# print(data)
+for i in range(8):
+    data = data.drop(i)
+print(data)
 
 ## 지역구 이름 배열 구하기
 location_array = []
@@ -32,6 +33,7 @@ n = len(location)
 count = 0
 elec_count = [0 for i in range(n)]
 category = ['전기', '하이브리드(LPG+전기)', '하이브리드(경유+전기)', '하이브리드(휘발유+전기)']
+
 for i in range(len(data)):
     if i > 8:
         val = data['Unnamed: 3'][i]
@@ -90,7 +92,7 @@ m = folium.Map(location=[37.562225, 126.978555], tiles="OpenStreetMap", zoom_sta
 state_geo = 'https://raw.githubusercontent.com/southkorea/seoul-maps/master/kostat/2013/json/seoul_municipalities_geo_simple.json'
 m.choropleth(
     geo_data=state_geo,
-    name='인당소득',
+    name='전기자동차 등록 현황',
     data=loc_df,
     columns=['LOCATION', 'COUNT'],
     key_on='feature.properties.name',
@@ -98,6 +100,6 @@ m.choropleth(
     fill_opacity=0.7,
     line_opacity=0.3,
     color = 'gray',
-    legend_name = 'income'
+    legend_name = '전기자동차 등록 현황'
 )
 m.save('car.html')

@@ -82,7 +82,6 @@ plt.rc('figure', titlesize=50) # figure title 폰트 크기
 zcode_arr = ['서울', '부산', '대구', '인천', '광주', '대전', '울산', '세종', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주']
 df_count = only_zcode.to_numpy()
 
-
 # 숫자 label 추가
 def add_value_label(x_list, y_list):
     for i in range(1, len(x_list) + 1):
@@ -100,7 +99,7 @@ add_value_label(zcode_arr, df_count)
 # 그래프 출력
 plt.show()
 
-## 지도 출력
+## 지도 출력 (서울특별시)
 # x좌표(위도),y좌표(경도) 리스트로 만들기
 x = []
 y = []
@@ -126,8 +125,17 @@ for i in range(len(x)):
         location = [x[i], y[i]],
         tooltip = name[i],
         radius = 200,
-        color='violet'
+        color='purple'
     ).add_to(m)
+
+from folium.plugins import HeatMap
+heatMap = HeatMap(zip(x, y),
+                   min_opacity=0.65,
+                   max_val=5,
+                   radius=10, blur=15,
+                   max_zoom=5,color='red')
+
+m.add_child(heatMap)
 
 m.save('station.html')
 
